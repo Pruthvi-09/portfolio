@@ -9,10 +9,12 @@ const Computers = ({ isMobile }) => {
     const meshRef = useRef();
 
     useFrame((state, delta) => {
-        if (meshRef.current) {
+        if (meshRef.current && computer.scene) {
             meshRef.current.rotation.y += delta * 0.1;
         }
     });
+
+    if (!computer.scene) return null;
 
     return (
         <mesh ref={meshRef}>
@@ -68,6 +70,7 @@ const ComputersCanvas = () => {
                 powerPreference: "high-performance"
             }}
             performance={{ min: 0.5 }}
+            style={{ pointerEvents: 'none' }}
         >
             <Suspense fallback={<CanvasLoader />}>
                 <OrbitControls
